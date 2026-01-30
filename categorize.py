@@ -1,7 +1,7 @@
 import json
-from setfit import SetFitModel, SetFitTrainer
+from setfit import SetFitModel, SetFitTrainer, TrainingArguments, sample_dataset, Trainer
 from sentence_transformers.losses import CosineSimilarityLoss
-from datasets import Dataset
+from datasets import Dataset, load_dataset
 
 def load_training_data(file_path):
     """Loads training data from a JSON file."""
@@ -28,21 +28,38 @@ def main():
 
     # 2. LOAD A PRE-TRAINED MODEL
     # 'all-MiniLM-L6-v2' is small, fast, and excellent for English technical text.
-    model = SetFitModel.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
+    #model = SetFitModel.from_pretrained("intfloat/multilingual-e5-small")
 
-    # 3. TRAIN THE MODEL (FINE-TUNING)
-    # SetFit uses contrastive learning (comparing pairs) to learn efficiently from small data.
-    trainer = SetFitTrainer(
-        model=model,
-        train_dataset=train_dataset,
-        loss_class=CosineSimilarityLoss,
-        batch_size=16,
-        num_epochs=1,
-        num_iterations=20  # Generates 20 pairs per sentence to learn "similarity"
+    dataset = load_dataset("SetFit/sst2")
+    train_dataset = sample_dataset(dataset["train"], label_column="label", num_samples=8)
+    
+    model.labels = ["negative", "positive"]
+
+    args = TrainingArguments(
+        batch_size=32,
+        num_epochs=10,
     )
 
-    print("Training on user examples...")
+    trainer = Trainer(
+        model=model,
+        args=args,
+        train_dataset=train_dataset,
+    )
+
     trainer.train()
+
+    trainer.evaluate(train_dataset)
+
+    model.save_pretrained("trained")
+
+    model = SetFitModel.from_pretrained("trained")
+
+    preds = model.predict([
+        "It's a charming and often affecting journey.",
+        "It's slow -- very, very slow.",
+        "A sometimes tedious film.",
+    ])
+    preds
 
     # 4. TEST WITH NEW, UNSEEN REQUIREMENTS
     new_requirements = [
