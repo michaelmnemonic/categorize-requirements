@@ -1,32 +1,28 @@
+import json
 from setfit import SetFitModel, SetFitTrainer
 from sentence_transformers.losses import CosineSimilarityLoss
 from datasets import Dataset
 
+def load_training_data(file_path):
+    """Loads training data from a JSON file."""
+    with open(file_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    
+    # JSON keys are strings, so we convert label IDs back to integers for the map.
+    category_map = {int(k): v for k, v in data['category_map'].items()}
+    
+    # Re-structure the list of objects into a dictionary of lists for the Dataset.
+    texts = [item['text'] for item in data['training_data']]
+    labels = [item['label'] for item in data['training_data']]
+    training_data_dict = {"text": texts, "label": labels}
+    
+    train_dataset = Dataset.from_dict(training_data_dict)
+    
+    return train_dataset, category_map
+
 def main():
-    # 1. PREPARE THE "FEW-SHOT" DATA
-    # In a real app, this would come from your user's input.
-    # We map category names to numbers (Label ID) for the model.
-    category_map = {0: "Functional-Safety", 1: "Performance", 2: "Security"}
-
-    training_data = {
-        "text": [
-            # Functional-Safety Examples
-            "The emergency brake must engage immediately if the sensor signal is lost.",
-            "System must ensure redundant power supply activation within 10ms of failure.",
-            
-            # Performance Examples
-            "The dashboard must render the main view in under 1.5 seconds.",
-            "API latency must not exceed 200ms for 99% of requests.",
-            
-            # Security Examples
-            "All user passwords must be hashed and salted before storage.",
-            "The system must enforce a 15-minute session timeout for inactivity."
-        ],
-        "label": [0, 0, 1, 1, 2, 2]  # Corresponding label IDs for the text above
-    }
-
-    # Convert to a Hugging Face Dataset format
-    train_dataset = Dataset.from_dict(training_data)
+    # 1. LOAD THE "FEW-SHOT" DATA FROM JSON
+    train_dataset, category_map = load_training_data('training_data.json')
 
     print("Loading model (this happens once)...")
 
