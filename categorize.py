@@ -1,4 +1,5 @@
 from setfit import SetFitModel, SetFitTrainer
+from sentence_transformers.losses import CosineSimilarityLoss
 from datasets import Dataset
 
 def main():
@@ -38,7 +39,7 @@ def main():
     trainer = SetFitTrainer(
         model=model,
         train_dataset=train_dataset,
-        loss_class="CosineSimilarityLoss",
+        loss_class=CosineSimilarityLoss,
         batch_size=16,
         num_epochs=1,
         num_iterations=20  # Generates 20 pairs per sentence to learn "similarity"
