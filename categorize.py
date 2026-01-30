@@ -59,7 +59,7 @@ def main():
         "It's slow -- very, very slow.",
         "A sometimes tedious film.",
     ])
-    preds
+    print(preds)
 
     # 4. TEST WITH NEW, UNSEEN REQUIREMENTS
     new_requirements = [
