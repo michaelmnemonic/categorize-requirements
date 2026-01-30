@@ -49,7 +49,8 @@
           #python
           python313
           ruff
-          dataset
+          python313Packages.datasets
+          python313Packages.accelerate
           self.packages.${system}.setfit
 
           # nix
