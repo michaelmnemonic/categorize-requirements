@@ -4,7 +4,7 @@ from helpers import load_training_data
 
 def main():
     model = SetFitModel.from_pretrained("intfloat/multilingual-e5-small")
-    train_dataset, model.labels  = load_training_data("training_data.json")
+    train_dataset, model.labels  = load_training_data("../data/training_data.json")
     
     args = TrainingArguments(
         batch_size=32,
@@ -19,7 +19,7 @@ def main():
 
     trainer.train()
 
-    model.save_pretrained("model")
+    model.save_pretrained("../model")
 
 if __name__ == "__main__":
     main()

@@ -6,3 +6,6 @@ result
 checkpoints
 runs
 model
+
+# python
+*.pyc

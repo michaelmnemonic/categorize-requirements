@@ -3,7 +3,7 @@ from setfit import SetFitModel, SetFitTrainer, TrainingArguments, sample_dataset
 from datasets import Dataset, load_dataset
 
 def main():
-    model = SetFitModel.from_pretrained("model")
+    model = SetFitModel.from_pretrained("../model")
 
     requirements = [
         "The login page must block IP addresses after 5 failed attempts.",
