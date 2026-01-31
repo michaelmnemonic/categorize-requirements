@@ -7,16 +7,15 @@ from setfit import SetFitModel
 def main():
     # Ensure we are in the src directory for relative paths in other scripts to work
     script_dir = Path(__file__).parent.resolve()
-    os.chdir(script_dir)
     
-    model_path = "../model"
+    model_path = script_dir.parent / "model"
     
-    print(f"Checking for model in {Path(model_path).resolve()}...")
+    print(f"Checking for model in {model_path}...")
     sys.stdout.flush()
     
     try:
         # Try to load the model to verify it's usable
-        model = SetFitModel.from_pretrained(model_path)
+        model = SetFitModel.from_pretrained(str(model_path))
         print("Model loaded successfully.")
         sys.stdout.flush()
     except Exception as e:

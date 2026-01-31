@@ -1,9 +1,12 @@
 import json
+from pathlib import Path
 from setfit import SetFitModel, SetFitTrainer, TrainingArguments, sample_dataset, Trainer
 from datasets import Dataset, load_dataset
 
 def main():
-    model = SetFitModel.from_pretrained("../model")
+    script_dir = Path(__file__).parent.resolve()
+
+    model = SetFitModel.from_pretrained(script_dir.parent / "model")
 
     requirements = [
         "The login page must block IP addresses after 5 failed attempts.",

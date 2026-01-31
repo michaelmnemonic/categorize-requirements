@@ -1,10 +1,13 @@
 from setfit import SetFitModel, SetFitTrainer, TrainingArguments, sample_dataset, Trainer
 from datasets import Dataset, load_dataset
 from helpers import load_training_data
+from pathlib import Path
 
 def main():
+    script_dir = Path(__file__).parent.resolve()
+
     model = SetFitModel.from_pretrained("intfloat/multilingual-e5-small")
-    train_dataset, model.labels  = load_training_data("../data/training_data.json")
+    train_dataset, model.labels  = load_training_data(script_dir.parent / "data" / "training_data.json")
     
     args = TrainingArguments(
         batch_size=32,
@@ -19,7 +22,7 @@ def main():
 
     trainer.train()
 
-    model.save_pretrained("../model")
+    model.save_pretrained( script_dir.parent / "model" )
 
 if __name__ == "__main__":
     main()
