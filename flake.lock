@@ -18,7 +18,28 @@
     },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "setfit": "setfit"
+      }
+    },
+    "setfit": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1769873804,
+        "narHash": "sha256-h8vSRXLHZiNeLUaEUdo6Xr424hob4bCSqFb1tHnbygY=",
+        "owner": "michaelmnemonic",
+        "repo": "setfit-flake",
+        "rev": "5d39511da82521cfd7aa6cfc0f6c711f7766281d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "michaelmnemonic",
+        "repo": "setfit-flake",
+        "type": "github"
       }
     }
   },
