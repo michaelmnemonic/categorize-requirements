@@ -1,48 +1,9 @@
 import json
 from setfit import SetFitModel, SetFitTrainer, TrainingArguments, sample_dataset, Trainer
-from sentence_transformers.losses import CosineSimilarityLoss
 from datasets import Dataset, load_dataset
 
-def load_training_data(file_path):
-    """Loads training data from a JSON file."""
-    with open(file_path, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    
-    # extract labels
-    labels = data['labels']
-
-    # extract dataset
-    train_dataset = Dataset.from_list(data['data'])
-
-    return train_dataset, labels
-
 def main():
-    # 2. LOAD A PRE-TRAINED MODEL
-    # 'all-MiniLM-L6-v2' is small, fast, and excellent for English technical text.
-    model = SetFitModel.from_pretrained("intfloat/multilingual-e5-small")
-
-    train_dataset, labels = load_training_data("training_data.json")
-        
-    model.labels = labels
-
-    args = TrainingArguments(
-        batch_size=32,
-        num_epochs=10,
-    )
-
-    trainer = Trainer(
-        model=model,
-        args=args,
-        train_dataset=train_dataset,
-    )
-
-    trainer.train()
-
-    trainer.evaluate(train_dataset)
-
-    model.save_pretrained("trained")
-
-    #model = SetFitModel.from_pretrained("trained")
+    model = SetFitModel.from_pretrained("model")
 
     requirements = [
         "The login page must block IP addresses after 5 failed attempts.",
