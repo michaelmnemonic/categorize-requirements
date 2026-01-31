@@ -1,10 +1,11 @@
 {
-  "category_map": {
-    "0": "Functional-Safety",
-    "1": "Performance",
-    "2": "Security"
-  },
-  "training_data": [
+  "version": "0.0.1",
+  "labels": [
+    "Functional-Safety",
+    "Performance",
+    "Security"
+  ],
+  "data": [
     { "text": "The emergency brake must engage immediately if the sensor signal is lost.", "label": 0 },
     { "text": "System must ensure redundant power supply activation within 10ms of failure.", "label": 0 },
     { "text": "The dashboard must render the main view in under 1.5 seconds.", "label": 1 },
