@@ -2,6 +2,7 @@
 result
 .direnv
 
-# models
+# model
 checkpoints
 runs
+model
