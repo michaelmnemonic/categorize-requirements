@@ -28,15 +28,6 @@ def main():
         except subprocess.CalledProcessError as e:
             print(f"Training failed with error code {e.returncode}")
             sys.exit(1)
-            
-    print("-" * 30)
-    print("Running categorization...")
-    sys.stdout.flush()
-    try:
-        subprocess.run([sys.executable, "categorize.py"], check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"Categorization failed with error code {e.returncode}")
-        sys.exit(1)
 
 if __name__ == "__main__":
     main()
