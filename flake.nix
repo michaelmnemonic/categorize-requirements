@@ -33,6 +33,7 @@
           ruff
           python313Packages.datasets
           python313Packages.accelerate
+          python313Packages.pytest
           setfit.packages.${system}.setfit
 
           # nix
